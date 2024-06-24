@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.starkindustries.authentication" />
+                  <option name="mobileSdkAppId" value="1:610590329980:android:397c0e2a8d7e9d09e08df9" />
+                  <option name="projectId" value="authentication-using-kotlin" />
+                  <option name="projectNumber" value="610590329980" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.DashBoardScreen">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:padding="10dp">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/getUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get user Information"
+            android:textSize="20sp"
+            android:textAppearance="@color/black"
+            android:textColor="@color/black">
+        </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/updateUserProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update User Profile"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/updateUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update User Email"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sendEmailVerification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Email Verification"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/setPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Password"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sendPasswordReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Password Reset"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/reauthenticateUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reauthenticate user"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/deleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete user"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
