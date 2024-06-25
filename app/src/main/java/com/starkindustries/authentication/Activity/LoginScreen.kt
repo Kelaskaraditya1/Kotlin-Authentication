@@ -1,5 +1,6 @@
 package com.starkindustries.authentication.Activity
 import android.app.Activity
+import android.content.ContentProviderClient
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,16 +17,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.starkindustries.authentication.R
 import com.starkindustries.authentication.databinding.ActivityLoginScreenBinding
-
 class LoginScreen : AppCompatActivity() {
     lateinit var binding:ActivityLoginScreenBinding
     lateinit var auth:FirebaseAuth
-    lateinit var googleSigninCLient:GoogleSignInClient
+    internal lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,8 +35,9 @@ class LoginScreen : AppCompatActivity() {
         auth=FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_id))
-            .requestEmail().build()
-        googleSigninCLient=GoogleSignIn.getClient(this,gso)
+            .requestEmail()
+            .build()
+        googleSignInClient=GoogleSignIn.getClient(this,gso)
         binding.registerbtn.setOnClickListener()
         {
             startActivity(Intent(this,RegisterScreen::class.java))
@@ -59,10 +61,11 @@ class LoginScreen : AppCompatActivity() {
             {
                 Toast.makeText(applicationContext, "Either Email or Password is incorrect", Toast.LENGTH_SHORT).show()
             }
-            binding.googleSigninButton.setOnClickListener()
-            {
-                signinWithGoogle()
-            }
+        }
+        binding.googleSigninButton.setOnClickListener()
+        {
+            val intent = googleSignInClient.signInIntent
+            startActivityForResult(intent, SIGN_IN_REQUEST_CODE)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -71,58 +74,43 @@ class LoginScreen : AppCompatActivity() {
             insets
         }
     }
-
     override fun onStart() {
         super.onStart()
         if(auth.currentUser!=null)
         {
+            Toast.makeText(applicationContext, "Welcome back "+auth.currentUser?.displayName.toString().trim(), Toast.LENGTH_SHORT).show()
             startActivity(Intent(this,DashBoardScreen::class .java))
             finish()
         }
     }
-
-    fun updateUi(account:GoogleSignInAccount)
-    {
-        val credentials = GoogleAuthProvider.getCredential(account.idToken,null)
-        auth.signInWithCredential(credentials).addOnCompleteListener(){
-            if(it.isSuccessful)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode== SIGN_IN_REQUEST_CODE)
+        {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try
             {
-                startActivity(Intent(this,DashBoardScreen::class.java))
-                finish()
+                val account = task.getResult(ApiException::class.java)
+                val credentials = GoogleAuthProvider.getCredential(account.idToken,null)
+                auth.signInWithCredential(credentials).addOnCompleteListener()
+                {
+                    if(it.isSuccessful)
+                    {
+                        Toast.makeText(applicationContext, "Welcome "+auth.currentUser?.displayName.toString().trim(), Toast.LENGTH_SHORT).show()
+                        var intent = Intent(this,DashBoardScreen::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
-            else
+            catch (e:Exception)
             {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Some thing wnt Wrong", Toast.LENGTH_SHORT).show()
             }
         }
     }
-    fun handleResults(task:Task<GoogleSignInAccount>)
+    companion object
     {
-        if(task.isSuccessful)
-        {
-            val account:GoogleSignInAccount=task.result
-            updateUi(account)
-        }
-        else
-        {
-            Toast.makeText(this, "Signin Failed , Try again Later", Toast.LENGTH_SHORT).show()
-        }
+        val SIGN_IN_REQUEST_CODE=9001
     }
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-    {
-            result->
-        if(result.resultCode== Activity.RESULT_OK)
-        {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            handleResults(task)
-        }
-
-    }
-    fun signinWithGoogle()
-    {
-        val signinIntent=googleSigninCLient.signInIntent
-        launcher.launch(signinIntent)
-
-    }
-
 }

@@ -2,6 +2,7 @@ package com.starkindustries.authentication.Activity
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -45,4 +46,5 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity,LoginScreen::class.java))
         }
     }
+
 }
