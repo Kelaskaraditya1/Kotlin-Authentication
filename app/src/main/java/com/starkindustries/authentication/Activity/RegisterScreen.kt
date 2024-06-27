@@ -10,12 +10,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.starkindustries.authentication.R
 import com.starkindustries.authentication.databinding.ActivityRegisterScreenBinding
-
 class RegisterScreen : AppCompatActivity() {
     lateinit var binding:ActivityRegisterScreenBinding
     lateinit var auth:FirebaseAuth
+    lateinit var firebaseDatabaseInstance:FirebaseDatabase
+    lateinit var firebaseDatabase:DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,7 +40,7 @@ class RegisterScreen : AppCompatActivity() {
                         {
                             Log.d("errorListner"," "+it.message.toString().trim())
                         }
-                    startActivity(Intent(this, DashBoardScreen::class.java))
+                    startActivity(Intent(this, NotesSectionActivity::class.java))
                     finish()
                 }
             }.addOnFailureListener(){

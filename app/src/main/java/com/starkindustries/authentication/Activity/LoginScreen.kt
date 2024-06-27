@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
 import com.starkindustries.authentication.R
 import com.starkindustries.authentication.databinding.ActivityLoginScreenBinding
 class LoginScreen : AppCompatActivity() {
@@ -54,7 +55,7 @@ class LoginScreen : AppCompatActivity() {
             auth.signInWithEmailAndPassword(binding.loginText.text.toString().trim(),binding.passwordText.text.toString().trim()).addOnCompleteListener(){
                 if(it.isSuccessful)
                 {
-                    startActivity(Intent(this,DashBoardScreen::class.java))
+                    startActivity(Intent(this,NotesSectionActivity::class.java))
                     finish()
                 }
             }.addOnFailureListener()
@@ -74,15 +75,15 @@ class LoginScreen : AppCompatActivity() {
             insets
         }
     }
-    override fun onStart() {
-        super.onStart()
-        if(auth.currentUser!=null)
-        {
-            Toast.makeText(applicationContext, "Welcome back "+auth.currentUser?.displayName.toString().trim(), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this,DashBoardScreen::class .java))
-            finish()
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if(auth.currentUser!=null)
+//        {
+//            Toast.makeText(applicationContext, "Welcome back "+auth.currentUser?.displayName.toString().trim(), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(this,NotesSectionActivity::class .java))
+//            finish()
+//        }
+//    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== SIGN_IN_REQUEST_CODE)
@@ -97,7 +98,7 @@ class LoginScreen : AppCompatActivity() {
                     if(it.isSuccessful)
                     {
                         Toast.makeText(applicationContext, "Welcome "+auth.currentUser?.displayName.toString().trim(), Toast.LENGTH_SHORT).show()
-                        var intent = Intent(this,DashBoardScreen::class.java)
+                        var intent = Intent(this,NotesSectionActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
         override fun onPostExecute(result: String?) {
             if(auth.currentUser!=null)
-                startActivity(Intent(this@MainActivity,DashBoardScreen::class.java))
+                startActivity(Intent(this@MainActivity,NotesSectionActivity::class.java))
             else
                 startActivity(Intent(this@MainActivity,LoginScreen::class.java))
         }
